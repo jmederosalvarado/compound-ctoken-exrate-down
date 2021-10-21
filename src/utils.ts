@@ -7,5 +7,5 @@ export const COMPTROLLER_ABI = [
 export const CTOKEN_ABI = [
   "function name() public view returns (string)",
   "function exchangeRateStored() public view returns (uint)",
-  "function exchangeRateCurrent() public returns (uint)",
+  "function exchangeRateCurrent() public view returns (uint)",
 ];

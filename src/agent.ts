@@ -1,5 +1,6 @@
 import { BigNumber, ethers } from "ethers";
 import {
+  BlockEvent,
   Finding,
   FindingSeverity,
   FindingType,
@@ -17,16 +18,22 @@ const provideHandleBlock = () => {
     provider
   );
 
-  return async () => {
+  return async (blockEvent: BlockEvent) => {
     const findings: Finding[] = [];
 
-    const ctokenAddrs: [string] = await comptroller.getAllMarkets();
+    const ctokenAddrs: [string] = await comptroller.getAllMarkets({
+      blockTag: blockEvent.blockNumber,
+    });
     const ctokens = ctokenAddrs.map(
       (addr) => new ethers.Contract(addr, CTOKEN_ABI, provider)
     );
     for (const ctoken of ctokens) {
-      const name: string = await ctoken.name();
-      const currRate: BigNumber = await ctoken.exchangeRateCurrent();
+      const name: string = await ctoken.name({
+        blockTag: blockEvent.blockNumber,
+      });
+      const currRate: BigNumber = await ctoken.exchangeRateCurrent({
+        blockTag: blockEvent.blockNumber,
+      });
       const prevRate = exchangeRates[ctoken.address];
       if (prevRate && currRate.lt(prevRate)) {
         findings.push(
