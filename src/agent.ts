@@ -42,7 +42,7 @@ const provideHandleBlock = () => {
             description: `cToken ${name} Exchange Rate went down.`,
             alertId: "COMPOUND_CTOKEN_EXRATE",
             severity: FindingSeverity.Medium,
-            type: FindingType.Info,
+            type: FindingType.Suspicious,
           })
         );
       }
