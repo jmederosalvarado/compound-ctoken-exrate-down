@@ -21,7 +21,7 @@ const provideHandleBlock = () => {
   return async (blockEvent: BlockEvent) => {
     const findings: Finding[] = [];
 
-    const ctokenAddrs: [string] = await comptroller.getAllMarkets({
+    const ctokenAddrs: string[] = await comptroller.getAllMarkets({
       blockTag: blockEvent.blockNumber,
     });
     const ctokens = ctokenAddrs.map(
